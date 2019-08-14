@@ -1,0 +1,19 @@
+<?php
+/**
+ * @category   Creativestyle
+ * @package    Creativestyle_AffiliNet
+ * @copyright  Copyright (c) 2014 creativestyle GmbH
+ * @author     Marek Zabrowarny / creativestyle GmbH <support@creativestyle.de>
+ */
+?>
+<script type="text/javascript">//<![CDATA[
+    document.observe('dom:loaded', function() {
+        if ($('creative-system-config')) {
+            $('creative-system-config').setStyle({
+                display: 'block', backgroundImage: 'url(<?php echo $this->getSkinUrl('creativestyle/images/affili-net-creativestyle-header-logo.png'); ?>)',
+                backgroundPosition: '0 50%', backgroundRepeat: 'no-repeat', height: '27px', margin: '0', padding: '0',
+                textIndent: '-9999px', cursor: 'auto'
+            });
+        }
+    });
+//]]></script>

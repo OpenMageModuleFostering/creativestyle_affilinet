@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @category   Creativestyle
+ * @package    Creativestyle_AffiliNet
+ * @copyright  Copyright (c) 2014 creativestyle GmbH
+ * @author     Marek Zabrowarny / creativestyle GmbH <support@creativestyle.de>
+ */
+-->
+<layout version="1.0.0">
+    <default>
+        <reference name="before_body_end">
+            <block type="affilinet/tracking" name="affilinet_tracking" template="creativestyle/affilinet/tracking.phtml"/>
+            <block type="affilinet/retargeting" name="affilinet_retargeting"/>
+        </reference>
+    </default>
+</layout>

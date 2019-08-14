@@ -1,0 +1,122 @@
+<?php
+$_htmlId = $this->getElement()->getHtmlId();
+$_htmlName = $this->getElement()->getName();
+$attributes = Mage::helper('affilinet')->getAllAttributes();
+?>
+
+<tr>
+    <td class="label"><?php echo $this->getElement()->getLabel() ?></td>
+    <td colspan="10" class="grid">
+    <table cellspacing="0" class="data border" id="mapper_table">
+        <col width="120" />
+        <col width="95" />
+        <col />
+        <col width="1" />
+        <col />
+        <col />
+        <thead>
+            <tr class="headings">
+                <th><?php echo Mage::helper('affilinet')->__('Title') ?></th>
+                <th><?php echo Mage::helper('affilinet')->__('Prefix') ?></th>
+                <th><?php echo Mage::helper('affilinet')->__('Fieldname') ?></th>
+                <th><?php echo Mage::helper('affilinet')->__('Suffix') ?></th>
+                <th><?php echo Mage::helper('affilinet')->__('Concatenation') ?></th>
+                <th><?php echo Mage::helper('affilinet')->__('Action') ?></th>
+            </tr>
+        </thead>
+        <tbody id="<?php echo $_htmlId ?>_container"></tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6" class="a-right"><?php echo $this->getAddButtonHtml() ?></td>
+            </tr>
+        </tfoot>
+    </table>
+
+<script type="text/javascript">
+//<![CDATA[
+var mapperRowTemplate = '<tr>'
+    + '<td class="nobr"><input class="" type="text" name="<?php echo $_htmlName ?>[{{index}}][title]" value="{{title}}" id="mapper_row_{{index}}_title" />'
+    + '<td class="nobr"><input class="" type="text" name="<?php echo $_htmlName ?>[{{index}}][preffix]" value="{{preffix}}" id="mapper_row_{{index}}_preffix" />'
+    + '<td><select class="required-entry" name="<?php echo $_htmlName ?>[{{index}}][fieldname]" id="mapper_row_{{index}}_fieldname">'
+    <?php foreach ($attributes as $code => $label){ ?>
+    + '<option value="<?php echo $code ?>"><?php echo $this->jsQuoteEscape($this->escapeHtml($label)) ?></option>'
+    <?php } ?>
+    + '</select></td>'
+    + '<td class="nobr"><input class="" type="text" name="<?php echo $_htmlName ?>[{{index}}][suffix]" value="{{suffix}}" id="mapper_row_{{index}}_suffix" />'
+    + '<td class="nobr"><input class="" type="checkbox" name="<?php echo $_htmlName ?>[{{index}}][concatenation]" value="{{concatenation}}" id="mapper_row_{{index}}_concatenation" />'
+    + '<td class="last"><input type="hidden" name="<?php echo $_htmlName ?>[{{index}}][delete]" class="delete" value="" id="mapper_row_{{index}}_delete" />'
+    + '<button title="<?php echo Mage::helper('affilinet')->__("Delete Field") ?>" type="button" class="scalable delete icon-btn delete-product-option" id="mapper_row_{{index}}_delete_button" onclick="return mapperControl.deleteItem(event);">'
+    + '<span><span><span><?php echo Mage::helper('affilinet')->__("Delete") ?></span></span></span></button></td>'
+    + '</tr>';
+
+var mapperControl = {
+    template: new Template(mapperRowTemplate, new RegExp('(^|.|\\r|\\n)({{\\s*(\\w+)\\s*}})', "")),
+    itemsCount: 0,
+    addItem : function () {
+        var data = {
+            title: '',
+            preffix: '',
+            fieldname: '',
+            suffix: '',
+            concatenation: '',
+            index: this.itemsCount++
+        };
+
+        if(arguments.length >= 5) {
+            data.title = arguments[0];
+            data.preffix = arguments[1];
+            data.fieldname = arguments[2];
+            data.suffix = arguments[3];
+            data.concatenation = arguments[4];
+        }
+        
+        Element.insert($('<?php echo $_htmlId ?>_container'), {
+            bottom : this.template.evaluate(data)
+        });
+
+        if (data.fieldname) {
+            $A($('mapper_row_'+data.index+'_fieldname').options).each(function(option){
+                if (option.value==data.fieldname) option.selected = true;
+            });
+        }
+
+        if (data.concatenation) {
+            if($('mapper_row_'+data.index+'_concatenation').value == 1){
+                $('mapper_row_'+data.index+'_concatenation').checked = true;
+            }
+        }
+
+        $('<?php echo $_htmlId ?>_container').select('input', 'select').each(function(el){ Event.observe(el, 'change', el.setHasChanges.bind(el)); });
+    },    
+    deleteItem: function(event) {
+        var tr = Event.findElement(event, 'tr');
+        if (tr) {
+            Element.select(tr, '.delete').each(function(elem){elem.value='1'});
+            Element.select(tr, ['input', 'select']).each(function(elem){elem.hide()});
+            Element.hide(tr);
+            Element.addClassName(tr, 'no-display template');
+        }
+        return false;
+    }
+};
+
+<?php
+
+$frozen = Mage::registry('frozen_data');
+if($frozen && isset($frozen['field_mapper']) && $frozen['field_mapper']){
+    foreach ($frozen['field_mapper'] as $item){
+        ?>
+        mapperControl.addItem(
+            '<?php echo $item['title'] ?>',
+            '<?php echo $item['preffix'] ?>',
+            '<?php echo $item['fieldname'] ?>',
+            '<?php echo $item['suffix'] ?>',
+            '<?php echo $item['concatenation'] ?>'
+        );
+        <?php
+    }
+}
+?>
+//]]>
+</script>
+</td></tr>

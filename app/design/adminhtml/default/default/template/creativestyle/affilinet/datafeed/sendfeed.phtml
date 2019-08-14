@@ -1,0 +1,17 @@
+<tr>
+    <td class="label"></td>
+    <td class="value">
+        <?php if(!$this->isDisabled()){ ?>
+            <button style="" onclick="setLocation('<?php echo $this->getSendUrl(); ?>')" class="scalable save" type="button" title="<?php echo Mage::helper('affilinet')->__('Submit the feed to affilinet'); ?>">
+                <span>
+                    <span>
+                        <span><?php echo Mage::helper('affilinet')->__('Submit the feed to affilinet'); ?></span>
+                    </span>
+                </span>
+            </button>
+            <!-- <div class="field-tooltip"><div><?php echo Mage::helper('affilinet')->__('Submit the feed to affilinet'); ?></div></div> -->
+        <?php }else{ ?>
+            <div><?php echo Mage::helper('affilinet')->__('Please generate datafeed file first'); ?></div>
+        <?php } ?>
+    </td>
+</tr>

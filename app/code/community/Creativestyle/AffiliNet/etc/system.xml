@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @category   Creativestyle
+ * @package    Creativestyle_AffiliNet
+ * @copyright  Copyright (c) 2014 creativestyle GmbH
+ * @author     Marek Zabrowarny / creativestyle GmbH <support@creativestyle.de>
+ */
+-->
+<config>
+    <tabs>
+        <creativestyle translate="label" module="affilinet">
+            <label><![CDATA[<div id="creative-system-config">creativestyle Extensions</div>]]></label>
+            <sort_order>99</sort_order>
+        </creativestyle>
+    </tabs>
+    <sections>
+        <affilinet translate="label comment">
+            <label>affilinet</label>
+            <comment>This extension was developed by creativestyle GmbH</comment>
+            <class>affili-net-section</class>
+            <header_css>affili-net-header</header_css>
+            <tab>creativestyle</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>80</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <extension_info>
+                    <frontend_model>affilinet/adminhtml_info</frontend_model>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                </extension_info>
+                <general translate="label">
+                    <label>General Settings</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <platform translate="label">
+                            <label>Platform</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>affilinet/system_config_source_platform</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </platform>
+                        <program_id translate="label">
+                            <label>Program ID</label>
+                            <tooltip>Type in your affilinet programID. If you don't have an affilinet account so far, you can easily apply for an affilinet account under the tab Registration.</tooltip>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </program_id>
+                        <currency translate="label comment">
+                            <label>Currency</label>
+                            <comment>This extension uses the default base currency of the store for all product values that are tracked</comment>
+                            <frontend_model>affilinet/adminhtml_system_config_form_field_currency</frontend_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </currency>
+                        <product_id translate="label">
+                            <label>Unique product identifier</label>
+                            <tooltip>The attribute used to uniquely identify the products.</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>affilinet/system_config_source_product_id</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </product_id>
+                        <manufacturer_attribute translate="label">
+                            <label>Manufacturer attribute</label>
+                            <tooltip>Attribute which defines the manufacturer of the product.</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>affilinet/system_config_source_product_attribute</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </manufacturer_attribute>
+                        <webservice_user translate="label">
+                            <label>Webservice Username</label>
+                            <tooltip>You can retrieve your web service user name from the affilinet login area. Simply log in using the following URL: https://advertiser.affili.net/Login.aspx and navigate to the section Account -> Account Data. You will find your web service access below your contact data. Your web service password will be sent to the submitted email address.</tooltip>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </webservice_user>
+                        <webservice_password translate="label">
+                            <label>Webservice Password</label>
+                            <tooltip>You can retrieve your web service user name from the affilinet login area. Simply log in using the following URL: https://advertiser.affili.net/Login.aspx and navigate to the section Account -> Account Data. You will find your web service access below your contact data. Your web service password will be sent to the submitted email address.</tooltip>
+                            <frontend_type>password</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </webservice_password>
+                        <company_logo translate="label">
+                            <label>Company logo</label>
+                            <frontend_type>image</frontend_type>
+                            <frontend_model>affilinet/adminhtml_system_config_form_field_image</frontend_model>
+                            <backend_model>affilinet/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="1">affilinet/logo</upload_dir>
+                            <base_url type="media" scope_info="1">affilinet/logo</base_url>
+                            <tooltip>Uploads are scaled proportionally to a size of 120 x 40 Pixels.</tooltip>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </company_logo>
+                    </fields>
+                </general>
+                <tracking translate="label">
+                    <label>Cart tracking</label>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enable cart tracking</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <tooltip>The basket tracking system helps you drill down orders generated through affilinet publishers and analyze the purchases on basket-item level. This information enables you to evaluate the sales performance of your products via affiliate marketing,  while helping publishers to optimize their marketing activities and send better converting traffic.</tooltip>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <heading translate="label">
+                            <label>Which of the following parameters shall be relayed to affilinet?</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </heading>
+                        <parameter1 translate="label comment">
+                            <label>Track order parameters</label>
+                            <tooltip>Visible for the advertiser only</tooltip>
+                            <comment>(psub1)</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>affilinet/system_config_source_tracking_parameters</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </parameter1>
+                        <parameter2 translate="comment">
+                            <comment>(psub2)</comment>
+                            <frontend_type>select</frontend_type>
+                            <tooltip>Visible for the advertiser only</tooltip>
+                            <source_model>affilinet/system_config_source_tracking_parameters</source_model>
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </parameter2>
+                        <attribute1 translate="label comment">
+                            <label>Track product attributes</label>
+                            <tooltip>These properties can also be accessed and analyzed by publishers sending traffic to your website. Thus only relay information you are willing to share.</tooltip>
+                            <comment>(property1)</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>affilinet/system_config_source_product_attribute</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </attribute1>
+                        <attribute2 translate="comment">
+                            <tooltip>These properties can also be accessed and analyzed by publishers sending traffic to your website. Thus only relay information you are willing to share.</tooltip>
+                            <comment>(property2)</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>affilinet/system_config_source_product_attribute</source_model>
+                            <sort_order>31</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </attribute2>
+                        <attribute3 translate="comment">
+                            <tooltip>These properties can also be accessed and analyzed by publishers sending traffic to your website. Thus only relay information you are willing to share.</tooltip>
+                            <comment>(property3)</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>affilinet/system_config_source_product_attribute</source_model>
+                            <sort_order>32</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </attribute3>
+                        <attribute4 translate="comment">
+                            <tooltip>These properties can also be accessed and analyzed by publishers sending traffic to your website. Thus only relay information you are willing to share.</tooltip>
+                            <comment>(property4)</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>affilinet/system_config_source_product_attribute</source_model>
+                            <sort_order>33</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </attribute4>
+                        <attribute5 translate="comment">
+                            <tooltip>These properties can also be accessed and analyzed by publishers sending traffic to your website. Thus only relay information you are willing to share.</tooltip>
+                            <comment>(property5)</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>affilinet/system_config_source_product_attribute</source_model>
+                            <sort_order>34</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </attribute5>
+                    </fields>
+                </tracking>
+                <retargeting translate="label">
+                    <label>Retargeting</label>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enable retargeting</label>
+                            <tooltip>Retargeting enables you to re-address specifically interested customers. Potential customers, who left your online shop without a purchase</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <product_options translate="label">
+                            <label>Product parameters</label>
+                            <frontend_model>affilinet/adminhtml_system_config_form_field_checkbox</frontend_model>
+                            <source_model>affilinet/system_config_source_retargeting_product</source_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </product_options>
+                        <category_options translate="label">
+                            <label>Category parameters</label>
+                            <frontend_model>affilinet/adminhtml_system_config_form_field_checkbox</frontend_model>
+                            <source_model>affilinet/system_config_source_retargeting_category</source_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </category_options>
+                        <cart_options translate="label">
+                            <label>Cart parameters</label>
+                            <frontend_model>affilinet/adminhtml_system_config_form_field_checkbox</frontend_model>
+                            <source_model>affilinet/system_config_source_retargeting_cart</source_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </cart_options>
+                        <checkout_options translate="label">
+                            <label>Checkout parameters</label>
+                            <frontend_model>affilinet/adminhtml_system_config_form_field_checkbox</frontend_model>
+                            <source_model>affilinet/system_config_source_retargeting_checkout</source_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </checkout_options>
+                    </fields>
+                </retargeting>
+                <datafeed translate="label">
+                    <label>Product Data Feed</label>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <pages translate="label">
+                            <label>Pages</label>
+                            <tooltip>Number of pages processed by each cronjob iteration (default: 5).</tooltip>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </pages>
+                        <coll_size translate="label">
+                            <label>Collection size</label>
+                            <tooltip>Number of products included in every page (default: 500).</tooltip>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </coll_size>
+                    </fields>
+                </datafeed>
+            </groups>
+        </affilinet>
+    </sections>
+</config>

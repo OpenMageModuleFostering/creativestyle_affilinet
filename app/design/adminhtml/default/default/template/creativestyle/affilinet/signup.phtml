@@ -1,0 +1,22 @@
+<div class="content-header">
+    <table cellspacing="0">
+        <tbody>
+            <tr>
+                <td><h3 class="icon-head">affilinet Registration</h3></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<?php if ($this->isSignedUp()): ?>
+    <ul class="messages">
+        <li class="notice-msg">
+            <ul>
+                <li><?php echo $this->__('This affilinet platform signup page is deactivated since you already entered a Program ID in the extension settings.'); ?></li>
+            </ul>
+        </li>
+    </ul>
+<?php else: ?>
+    <div>
+        <iframe id="affilinet-signup-iframe" src="<?php echo $this->getSignupFrameSource(); ?>" style="width:100%;height:1300px;" scrolling="auto" marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0" onload="frameLoaded()"></iframe>
+    </div>
+<?php endif; ?>

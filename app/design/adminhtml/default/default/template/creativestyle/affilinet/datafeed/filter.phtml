@@ -1,0 +1,98 @@
+<?php
+$_htmlId = $this->getElement()->getHtmlId();
+$_htmlName = $this->getElement()->getName();
+$attributes = Mage::helper('affilinet')->getAllAttributes(false);
+?>
+
+<tr>
+    <td class="label"><?php echo $this->getElement()->getLabel() ?></td>
+    <td colspan="10" class="grid">
+    <table cellspacing="0" class="data border" id="filter_table">
+        <col width="120" />
+        <col width="95" />
+        <col />
+        <thead>
+            <tr class="headings">
+                <th><?php echo Mage::helper('affilinet')->__('Fieldname') ?></th>
+                <th><?php echo Mage::helper('affilinet')->__('Filter') ?></th>
+                <th><?php echo Mage::helper('affilinet')->__('Action') ?></th>
+            </tr>
+        </thead>
+        <tbody id="<?php echo $_htmlId ?>_container"></tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="a-right"><?php echo $this->getAddButtonHtml() ?></td>
+            </tr>
+        </tfoot>
+    </table>
+
+<script type="text/javascript">
+//<![CDATA[
+var filterRowTemplate = '<tr>'
+    + '<td><select class="required-entry" name="<?php echo $_htmlName ?>[{{index}}][fieldname]" id="filter_row_{{index}}_fieldname">'
+    <?php foreach ($attributes as $code => $label){ ?>
+    + '<option value="<?php echo $code ?>"><?php echo $this->jsQuoteEscape($this->escapeHtml($label)) ?></option>'
+    <?php } ?>
+    + '</select></td>'
+    + '<td class="nobr"><input class="" type="text" name="<?php echo $_htmlName ?>[{{index}}][filter]" value="{{filter}}" id="filter_row_{{index}}_filter" />'
+    + '<td class="last"><input type="hidden" name="<?php echo $_htmlName ?>[{{index}}][delete]" class="delete" value="" id="filter_row_{{index}}_delete" />'
+    + '<button title="<?php echo Mage::helper('affilinet')->__("Delete Filter") ?>" type="button" class="scalable delete icon-btn delete-product-option" id="filter_row_{{index}}_delete_button" onclick="return filterControl.deleteItem(event);">'
+    + '<span><span><span><?php echo Mage::helper('affilinet')->__("Delete") ?></span></span></span></button></td>'
+    + '</tr>';
+
+var filterControl = {
+    template: new Template(filterRowTemplate, new RegExp('(^|.|\\r|\\n)({{\\s*(\\w+)\\s*}})', "")),
+    itemsCount: 0,
+    addItem : function () {
+        var data = {
+            fieldname: '',
+            filter: '',
+            index: this.itemsCount++
+        };
+
+        if(arguments.length >= 2) {
+            data.fieldname = arguments[0];
+            data.filter = arguments[1];
+        }
+        
+        Element.insert($('<?php echo $_htmlId ?>_container'), {
+            bottom : this.template.evaluate(data)
+        });
+
+        if (data.fieldname) {
+            $A($('filter_row_'+data.index+'_fieldname').options).each(function(option){
+                if (option.value==data.fieldname) option.selected = true;
+            });
+        }
+
+        $('<?php echo $_htmlId ?>_container').select('input', 'select').each(function(el){ Event.observe(el, 'change', el.setHasChanges.bind(el)); });
+    },    
+    deleteItem: function(event) {
+        var tr = Event.findElement(event, 'tr');
+        if (tr) {
+            Element.select(tr, '.delete').each(function(elem){elem.value='1'});
+            Element.select(tr, ['input', 'select']).each(function(elem){elem.hide()});
+            Element.hide(tr);
+            Element.addClassName(tr, 'no-display template');
+        }
+        return false;
+    }
+};
+
+<?php
+
+$frozen = Mage::registry('frozen_data');
+if($frozen && isset($frozen['field_filter']) && $frozen['field_filter']){
+    foreach ($frozen['field_filter'] as $item){
+        ?>
+        filterControl.addItem(
+            '<?php echo $item['fieldname'] ?>',
+            '<?php echo $item['filter'] ?>'
+        );
+        <?php
+    }
+}
+?>
+//]]>
+</script>
+</td></tr>

@@ -1,0 +1,157 @@
+<?php
+/**
+ * @category   Creativestyle
+ * @package    Creativestyle_AffiliNet
+ * @copyright  Copyright (c) 2014 creativestyle GmbH
+ * @author     Marek Zabrowarny / creativestyle GmbH <support@creativestyle.de>
+ */
+?>
+<div class="content-header">
+    <table cellspacing="0">
+        <tr>
+            <td style="<?php echo $this->getHeaderWidth() ?>"><?php echo $this->getHeaderHtml() ?></td>
+            <td class="form-buttons"><?php echo $this->getButtonsHtml() ?></td>
+        </tr>
+    </table>
+</div>
+<div>
+    <?php echo $this->getChildHtml('store_switcher') ?>
+</div>
+<div>
+    <?php echo $this->getChildHtml('affilinet.order.filter.form') ?>
+</div>
+<div>
+    <form id="affilinet-orders">
+        <?php echo $this->getGridHtml() ?>
+    </form>
+    <div class="affilinet-order-form-buttons form-buttons">
+        <button title="<?php echo $this->__('Save'); ?>" type="button" class="scalable save" onclick="saveOrders();"><span><span><span><?php echo $this->__('Save'); ?></span></span></span></button>
+    </div>
+</div>
+<script type="text/javascript">//<![CDATA[
+    function insertMessage(message, success) {
+        success = (typeof success === 'undefined') ? 1 : success;
+        var gridContainer = $('affilinetOrderGrid');
+        if (gridContainer) {
+            var messages = $('affilinet-messages');
+            if (messages) {
+                messages.update('<ul class="messages"><li class="' + (success ? 'success' : 'error') + '-msg"><ul><li>' + message + '</li></ul></li></ul>');
+            } else {
+                messages = new Element('div', {id: 'affilinet-messages'});
+                messages.insert('<ul class="messages"><li class="' + (success ? 'success' : 'error') + '-msg"><ul><li>' + message + '</li></ul></li></ul>');
+                gridContainer.insert({before: messages});
+            }
+            Effect.ScrollTo(messages, {duration: '0.5', offset: -45});
+        }
+    }
+
+    function filterFormSubmit() {
+        var filters = $$('#filter_form input', '#filter_form select');
+        var elements = [];
+        for (var i in filters) {
+            if (filters[i].value && filters[i].value.length && !filters[i].disabled) elements.push(filters[i]);
+        }
+        var validator  = new Validation('filter_form');
+        if (validator.validate()) {
+            setLocation('<?php echo $this->getFilterUrl(); ?>filter/' + encode_base64(Form.serializeElements(elements)) + '/');
+        }
+    }
+
+    function saveOrders() {
+        var parameters = {
+            store: <?php echo ($this->getStoreId() ? $this->getStoreId() : 'null'); ?>
+        };
+        $$('#affilinet-orders input').each(function(element) {
+            if (element.value && element.value.length && !element.disabled) {
+                if (element.type && element.type.toLowerCase() == 'radio') {
+                    var checked = $(element.form).getInputs('radio', element.name).detect(
+                        function(radiobutton) {return radiobutton.checked;}
+                    );
+                    parameters[element.name] = checked ? $F(checked) : null;
+                } else {
+                    parameters[element.name] = $F(element);
+                }
+            }
+        });
+        new Ajax.Request('<?php echo $this->getSaveBasketsUrl(); ?>', {
+            parameters: parameters,
+            onSuccess: function(transport) {
+                response = eval('(' + transport.responseText + ')');
+                if (response.error) {
+                    insertMessage(response.error_messages || 'Unknown error', false);
+                } else {
+                    if (response.success_messages) {
+                        insertMessage(response.success_messages, true);
+                    }
+                }
+            }
+        });
+        return false;
+    }
+
+    function saveBasket(basketId) {
+        var parameters = {
+            id: basketId,
+            store: <?php echo ($this->getStoreId() ? $this->getStoreId() : 'null'); ?>
+        };
+        $$('#affilinet-orders input[name*=' + basketId + ']', '#affilinet-orders select[name*=' + basketId + ']').each(function(element) {
+            if (element.value && element.value.length && !element.disabled) {
+                parameters[element.name] = $F(element);
+            };
+        });
+        new Ajax.Request('<?php echo $this->getSaveBasketItemsUrl(); ?>', {
+            parameters: parameters,
+            onSuccess: function(transport) {
+                response = eval('(' + transport.responseText + ')');
+                if (response.error) {
+                    insertMessage(response.error_messages || 'Unknown error', false);
+                } else {
+                    if (response.success_messages) {
+                        insertMessage(response.success_messages, true);
+                    }
+                }
+            }
+        });
+        return false;
+    }
+
+    function refreshBasketInfo(basketId) {
+        new Ajax.Updater('affilinetBasketInfo-' + basketId, '<?php echo $this->getBasketInfoUrl(); ?>', {
+            parameters: {
+                id: basketId,
+                store: <?php echo ($this->getStoreId() ? $this->getStoreId() : 'null'); ?>
+            }
+        });
+    }
+
+    function toggleBasketInfo(event, basketId) {
+        event.stop();
+        if (!$('affilinetBasketInfo-' + basketId)) {
+            var basketLink = $('affilinetBasketLink-' + basketId);
+            if (basketLink) {
+                var row = basketLink.up('tr');
+                var cells = row.select('> td');
+                row.insert({after: '<tr><td class="affilinetBasketInfo" id="affilinetBasketInfo-' + basketId + '" ' + (cells.length ? 'colspan="' + cells.length + '"' : '') + '"></td></tr>'});
+                refreshBasketInfo(basketId);
+            }
+        } else {
+            Effect.toggle('affilinetBasketInfo-' + basketId);
+        }
+        return false;
+    }
+
+    document.observe('dom:loaded', function() {
+        var overflowed = $$('#affilinetOrderGrid .hor-scroll');
+        if (overflowed) {
+            overflowed.invoke('removeClassName', 'hor-scroll');
+        }
+
+        $$('.affilinetBasketLink').each(function(link) {
+            var basketId = link.identify().gsub(/affilinetBasketLink-/, '');
+            if (basketId) {
+                Event.observe(link, 'click', toggleBasketInfo.bindAsEventListener(this, basketId));
+            }
+        });
+    });
+
+//]]></script>

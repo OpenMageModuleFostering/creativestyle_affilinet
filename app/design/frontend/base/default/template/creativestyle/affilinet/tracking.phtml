@@ -1,0 +1,31 @@
+<?php
+/**
+ * @category   Creativestyle
+ * @package    Creativestyle_AffiliNet
+ * @copyright  Copyright (c) 2014 creativestyle GmbH
+ * @author     Marek Zabrowarny / creativestyle GmbH <support@creativestyle.de>
+ */
+?>
+<iframe id="affilinetIFrame" name="affilinetIFrame" style="position:absolute;left:-10000px;width:0px;height:0px;border:0px;display:none"></iframe>
+<form name="affilinetTrackingForm" id="affilinetTrackingForm" target="affilinetIFrame" method="post" action="https://<?php echo $this->getTrackingDomain(); ?>/registersale.asp">
+    <input type="hidden" name="site" id="site" value="<?php echo $this->getProgramId(); ?>"/>
+    <input type="hidden" name="order" id="order" value="<?php echo $this->getOrderId(); ?>"/>
+    <input type="hidden" name="curr" id="curr" value="<?php echo $this->getOrderCurrency(); ?>"/>
+    <input type="hidden" name="vCode" id="vCode" value="<?php echo $this->getCouponCode(); ?>"/>
+    <input type="hidden" id="psub1" name="psub1" value="<?php echo $this->getSubInfo(1); ?>"/>
+    <input type="hidden" id="psub2" name="psub2" value="<?php echo $this->getSubInfo(2); ?>"/>
+    <input type="hidden" id="psub4" name="psub4" value="<?php echo $this->getSystemSubInfo(); ?>"/>
+    <textarea type="hidden" name="basket" id="basket" style="display:none;"><?php echo $this->getCartTrackingString(); ?></textarea>
+</form>
+<script type="text/javascript">
+    window.onload = function() {
+        document.getElementById('affilinetTrackingForm').submit();
+    }
+</script>
+<?php if (!$this->isRetargetingActive()): ?>
+    <script type="text/javascript">
+        var type = 'Checkout';
+        var site = '<?php echo $this->getProgramId(); ?>';
+    </script>
+    <script type="text/javascript" src="https://<?php echo $this->getTrackingDomain(); ?>/art/JS/param.aspx"></script>
+<?php endif; ?>

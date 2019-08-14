@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category   Creativestyle
+ * @package    Creativestyle_AffiliNet
+ * @copyright  Copyright (c) 2014 creativestyle GmbH
+ * @author     Marek Zabrowarny / creativestyle GmbH <support@creativestyle.de>
+ */
+-->
+<config>
+    <modules>
+        <Creativestyle_AffiliNet>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Creativestyle_AffiliNet>
+    </modules>
+</config>

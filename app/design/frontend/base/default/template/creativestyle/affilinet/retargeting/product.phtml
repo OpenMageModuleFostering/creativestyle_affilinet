@@ -1,0 +1,29 @@
+<?php
+/**
+ * @category   Creativestyle
+ * @package    Creativestyle_AffiliNet
+ * @copyright  Copyright (c) 2014 creativestyle GmbH
+ * @author     Marek Zabrowarny / creativestyle GmbH <support@creativestyle.de>
+ */
+?>
+<script type="text/javascript">
+    var type = 'Product';
+    var site = '<?php echo $this->getProgramId(); ?>';
+
+    var product_id = '<?php echo $this->getProductId(); ?>';
+    var product_name = '<?php echo $this->getProductName(); ?>';
+    var product_price = '<?php echo $this->getProductPrice(); ?>';
+<?php if ($this->getProductOldPrice()): ?>
+    var product_oldprice = '<?php echo $this->getProductOldPrice(); ?>';
+<?php endif; ?>
+    var product_category = '<?php echo $this->getProductCategory(); ?>';
+    var product_brand = '<?php echo $this->getProductManufacturer(); ?>';
+<?php if (null !== $this->getProductRating()): ?>
+    var product_rating = '<?php echo $this->getProductRating(); ?>';
+<?php endif; ?>
+    var product_inStock = '<?php echo $this->getProductOnStock(); ?>';
+<?php if (null !== $this->getProductOnSale()): ?>
+    var product_onsale = '<?php echo $this->getProductOnSale(); ?>';
+<?php endif; ?>
+</script>
+<script type="text/javascript" src="//<?php echo $this->getTrackingDomain(); ?>/art/JS/param.aspx"></script>

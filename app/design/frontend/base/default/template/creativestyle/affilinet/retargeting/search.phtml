@@ -1,0 +1,16 @@
+<?php
+/**
+ * @category   Creativestyle
+ * @package    Creativestyle_AffiliNet
+ * @copyright  Copyright (c) 2014 creativestyle GmbH
+ * @author     Marek Zabrowarny / creativestyle GmbH <support@creativestyle.de>
+ */
+?>
+<script type="text/javascript">
+    var type = 'Search';
+    var site = '<?php echo $this->getProgramId(); ?>';
+
+    var searchkeywords = '<?php echo $this->getSearchQuery(); ?>';
+    var product_id = '<?php echo $this->getSearchResult(); ?>';
+</script>
+<script type="text/javascript" src="//<?php echo $this->getTrackingDomain(); ?>/art/JS/param.aspx"></script>

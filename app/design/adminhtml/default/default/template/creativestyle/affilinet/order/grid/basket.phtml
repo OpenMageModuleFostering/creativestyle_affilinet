@@ -1,0 +1,39 @@
+<?php if ($items = $this->getItems()): ?>
+    <table class="affilinetBasketItems" cellspacing="0">
+        <thead>
+            <tr class="headings">
+                <th class="no-link"><?php echo $this->__('Position'); ?></th>
+                <th class="no-link"><?php echo $this->__('Article number'); ?></th>
+                <th class="no-link"><?php echo $this->__('Product Name'); ?></th>
+                <th class="no-link"><?php echo $this->__('Category'); ?></th>
+                <th class="no-link"><?php echo $this->__('Brand'); ?></th>
+                <th class="no-link"><?php echo $this->__('Product properties'); ?></th>
+                <th class="no-link"><?php echo $this->__('Rate'); ?></th>
+                <th class="no-link"><?php echo $this->__('Single price'); ?></th>
+                <th class="no-link"><?php echo $this->__('Quantity'); ?></th>
+                <th class="no-link"><?php echo $this->__('Total price'); ?></th>
+                <th class="no-link"><?php echo $this->__('Status'); ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($items as $item): ?>
+                <tr>
+                    <td class="a-center"><?php echo $item->getPositionNumber(); ?></td>
+                    <td><?php echo $item->getArticleNumber(); ?></td>
+                    <td><?php echo $item->getProductName(); ?></td>
+                    <td><?php echo $item->getCategory(); ?></td>
+                    <td><?php echo $item->getBrand(); ?></td>
+                    <td><?php echo implode(', ', array_filter($item->getProperties()->getData())); ?></td>
+                    <td><?php echo $item->getRateInfo()->getRateMode(); ?> (<?php echo $item->getRateInfo()->getRateValue(); ?>%)</td>
+                    <td class="a-right"><?php echo $this->formatCurrency($item->getSinglePrice()); ?></td>
+                    <td class="nowrap"><?php echo $this->getItemQuantityForm($item); ?></td>
+                    <td class="a-right"><?php echo $this->formatCurrency($item->getTotalPrice()); ?></td>
+                    <td><?php echo $this->getItemStatusForm($item); ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <div class="affilinet-order-form-buttons form-buttons">
+        <button title="<?php echo $this->__('Save basket'); ?>" type="button" class="scalable save" onclick="saveBasket('<?php echo $this->getBasketId(); ?>');"><span><span><span><?php echo $this->__('Save basket'); ?></span></span></span></button>
+    </div>
+<?php endif; ?>

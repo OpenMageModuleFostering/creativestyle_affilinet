@@ -1,0 +1,17 @@
+<div class="content-header">
+    <table cellspacing="0">
+        <tbody>
+            <tr>
+                <td><h3 class="icon-head">affilinet Introduction</h3></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <?php
+    $allowed = array('en', 'de', 'fr', 'es', 'nl');
+    $locale = explode('_', Mage::app()->getLocale()->getLocaleCode());
+    $lang = (in_array($locale[0], $allowed) !== false) ? $locale[0] : 'en';
+    ?>
+    <iframe id="affilinet-introduction-iframe" src="http://www.affili.net/htmlcontent/<?php echo $lang; ?>/shopmodules/magento/1/welcome.html" style="width:100%;height:700px;" scrolling="auto" marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0" onload="frameLoaded()"></iframe>
+</div>

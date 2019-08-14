@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @category   Creativestyle
+ * @package    Creativestyle_AffiliNet
+ * @copyright  Copyright (c) 2014 creativestyle GmbH
+ * @author     Marek Zabrowarny / creativestyle GmbH <support@creativestyle.de>
+ */
+-->
+<config>
+    <menu>
+        <affilinet>
+            <title>affilinet</title>
+            <sort_order>60</sort_order>
+            <children>
+                <introduction translate="title" module="affilinet">
+                    <title>Introduction</title>
+                    <sort_order>10</sort_order>
+                    <action>admin_affilinet/adminhtml_cms/introduction</action>
+                </introduction>
+                <signup translate="title" module="affilinet">
+                    <title>Registration</title>
+                    <sort_order>20</sort_order>
+                    <action>admin_affilinet/adminhtml_cms/signup</action>
+                </signup>
+                <datafeed translate="title" module="affilinet">
+                    <title>Product Data Feed</title>
+                    <sort_order>30</sort_order>
+                    <action>admin_affilinet/adminhtml_datafeed/index</action>
+                </datafeed>
+                <order translate="title" module="affilinet">
+                    <title>Orders</title>
+                    <sort_order>40</sort_order>
+                    <action>admin_affilinet/adminhtml_report_order</action>
+                </order>
+                <statistics translate="title" module="affilinet">
+                    <title>Statistics</title>
+                    <sort_order>50</sort_order>
+                    <action>admin_affilinet/adminhtml_report_statistics</action>
+                </statistics>
+                <settings translate="title" module="affilinet">
+                    <title>Settings</title>
+                    <sort_order>900</sort_order>
+                    <action>adminhtml/system_config/edit/section/affilinet</action>
+                    <resource>system/config/affilinet</resource>
+                </settings>
+            </children>
+        </affilinet>
+    </menu>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <affilinet>
+                        <title>affilinet</title>
+                        <children>
+                            <introduction translate="title" module="affilinet">
+                                <title>Introduction</title>
+                            </introduction>
+                            <signup translate="title" module="affilinet">
+                                <title>Registration</title>
+                            </signup>
+                            <datafeed translate="title" module="affilinet">
+                                <title>Product Data Feed</title>
+                            </datafeed>
+                            <order translate="title" module="affilinet">
+                                <title>Orders</title>
+                            </order>
+                            <statistics translate="title" module="affilinet">
+                                <title>Statistics</title>
+                            </statistics>
+                        </children>
+                    </affilinet>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <affilinet translate="title" module="affilinet">
+                                        <title>affilinet settings</title>
+                                    </affilinet>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>
