@@ -22,6 +22,9 @@
     var product_rating = '<?php echo $this->getProductRating(); ?>';
 <?php endif; ?>
     var product_inStock = '<?php echo $this->getProductOnStock(); ?>';
+    var product_clickUrl = '<?php echo $this->getProductUrl(); ?>';
+    var product_imgUrl = '<?php echo $this->getProductImageUrl(); ?>';
+    var currency = '<?php echo $this->getCurrency(); ?>';
 <?php if (null !== $this->getProductOnSale()): ?>
     var product_onsale = '<?php echo $this->getProductOnSale(); ?>';
 <?php endif; ?>

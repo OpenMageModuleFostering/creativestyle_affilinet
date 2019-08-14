@@ -248,6 +248,7 @@
 "Text links","Tekstlinks"
 "The attribute used to uniquely identify the products.","Het kenmerk dat is gebruikt om op een unieke wijze het product te identificeren"
 "The basket tracking system helps you drill down orders generated through affilinet publishers and analyze the purchases on basket-item level. This information enables you to evaluate the sales performance of your products via affiliate marketing,  while h","Basket tracking helpt u om de aankopen te analyseren op winkelwagen-niveau. Deze informatie geeft u de mogelijkheid om de salesresultaten die u ontvangt via affiliate marketing te analyseren, terwijl u publishers helpt om hun marketing activiteiten te opt"
+"The directory is missing and the script has been unable to create it. Please create it manually. Path %s","De directory ontbreekt en kon niet aangemaakt worden door script. Maak handmatig een directory. Path %s"
 "The information in this tab has been changed.","De informatie in dit tabblad is veranderd."
 "These properties can also be accessed and analyzed by publishers sending traffic to your website. Thus only relay information you are willing to share.","Deze gegevens kunnen worden bekeken en geanalyseerd door publishers die traffic naar u website sturen. Stuur daarom alleen informatie terug die u wil delen."
 "This affilinet platform signup page is deactivated since you already entered a Program ID in the extension settings.","Deze affilinet inlogpagina is gedeactiveerd , omdat u al een programma ID heeft ingevoerd in de uitgebreide instellingen."
