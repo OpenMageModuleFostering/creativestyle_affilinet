@@ -8,7 +8,6 @@
  */
 abstract class Creativestyle_AffiliNet_Controller_Adminhtml_Report_Abstract extends Mage_Adminhtml_Controller_Action {
 
-
     /**
      * Add affilinet breadcrumbs and title
      *
@@ -32,7 +31,7 @@ abstract class Creativestyle_AffiliNet_Controller_Adminhtml_Report_Abstract exte
             $blocks = array($blocks);
         }
 
-        $storeId = $this->getRequest()->getParam('store', Mage::helper('affilinet')->getStoreSwitcherFirstId());
+        $storeId = $this->getStoreId();
 
         $requestData = Mage::helper('adminhtml')->prepareFilterString($this->getRequest()->getParam('filter'));
         $requestData = $this->_filterDates($requestData, array('from', 'to'));
@@ -59,6 +58,14 @@ abstract class Creativestyle_AffiliNet_Controller_Adminhtml_Report_Abstract exte
         return $soapMessage;
     }
 
+    /**
+     * @return integer
+     */
+    protected function getStoreId()
+    {
+        return $this->getRequest()->getParam('store', Mage::helper('affilinet')->getStoreSwitcherFirstId());
+    }
+
     public function indexAction() {
         try {
             $this->_initLayout();
@@ -69,12 +76,12 @@ abstract class Creativestyle_AffiliNet_Controller_Adminhtml_Report_Abstract exte
                 return;
             } else {
                 Mage::getSingleton('adminhtml/session')->addError($this->_extractErrorMessage($eSoap->getMessage()));
-                $this->_redirect('*/*/');
+                $this->_redirect('*/*/error', array('error_in_store' => $this->getStoreId(), 'store' => $this->getStoreId()));
                 return;
             }
         } catch (Exception $e) {
             Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-            $this->_redirect('*/*/');
+            $this->_redirect('*/*/error', array('error_in_store' => $this->getStoreId(), 'store' => $this->getStoreId()));
             return;
         }
     }
@@ -84,4 +91,14 @@ abstract class Creativestyle_AffiliNet_Controller_Adminhtml_Report_Abstract exte
         $this->renderLayout();
     }
 
+    public function errorAction() {
+        $errorStoreId = $this->getRequest()->getParam('error_in_store', null);
+        $storeId = $this->getRequest()->getParam('store', null);
+        if ($errorStoreId != $storeId) {
+            $this->_redirect('*/*/', array('store' => $storeId));
+            return;
+        }
+        $this->_initLayout();
+        $this->renderLayout();
+    }
 }

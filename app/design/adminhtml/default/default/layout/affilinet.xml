@@ -81,6 +81,21 @@
     <adminhtml_affilinet_report_statistics_auth>
         <update handle="admin_affilinet_failed_auth"/>
     </adminhtml_affilinet_report_statistics_auth>
+    <admin_affilinet_api_error>
+        <reference name="content">
+            <block type="adminhtml/store_switcher" name="store_switcher" as="store_switcher">
+                <action method="hasDefaultOption"><params>0</params></action>
+                <action method="setUseConfirm"><params>0</params></action>
+                <action method="setStoreVarName"><var_name>store</var_name></action>
+            </block>
+        </reference>
+    </admin_affilinet_api_error>
+    <adminhtml_affilinet_report_order_error>
+        <update handle="admin_affilinet_api_error"/>
+    </adminhtml_affilinet_report_order_error>
+    <adminhtml_affilinet_report_statistics_error>
+        <update handle="admin_affilinet_api_error"/>
+    </adminhtml_affilinet_report_statistics_error>
     <adminhtml_affilinet_report_order_getbasketinfo>
         <block type="affilinet/adminhtml_report_order_grid_basketInfo" name="root" output="toHtml"/>
     </adminhtml_affilinet_report_order_getbasketinfo>

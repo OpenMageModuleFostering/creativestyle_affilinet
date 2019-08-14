@@ -3,14 +3,14 @@
 /**
  * @category   Creativestyle
  * @package    Creativestyle_AffiliNet
- * @copyright  Copyright (c) 2014 creativestyle GmbH
+ * @copyright  Copyright (c) 2014 - 2016 creativestyle GmbH
  * @author     Marek Zabrowarny / creativestyle GmbH <support@creativestyle.de>
  */
 -->
 <config>
     <modules>
         <Creativestyle_AffiliNet>
-            <version>1.1.8</version>
+            <version>1.1.9</version>
         </Creativestyle_AffiliNet>
     </modules>
     <global>
