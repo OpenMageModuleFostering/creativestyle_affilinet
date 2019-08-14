@@ -110,7 +110,7 @@ class Creativestyle_AffiliNet_Helper_Data extends Mage_Core_Helper_Abstract
             //->addUrlRewrite();
 
         if(isset($datafeed['store_id'])){
-            $collection->setStore($datafeed['store_id']);
+            $collection->addStoreFilter($datafeed['store_id']);
         }
 
         if($mapper){

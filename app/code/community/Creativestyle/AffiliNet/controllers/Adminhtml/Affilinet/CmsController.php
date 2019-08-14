@@ -6,7 +6,7 @@
  * @copyright  Copyright (c) 2014 creativestyle GmbH
  * @author     Marek Zabrowarny / creativestyle GmbH <support@creativestyle.de>
  */
-class Creativestyle_AffiliNet_Adminhtml_CmsController extends Mage_Adminhtml_Controller_Action {
+class Creativestyle_AffiliNet_Adminhtml_Affilinet_CmsController extends Mage_Adminhtml_Controller_Action {
 
     public function introductionAction() {
         $this->loadLayout()
@@ -26,6 +26,10 @@ class Creativestyle_AffiliNet_Adminhtml_CmsController extends Mage_Adminhtml_Con
             ->_title($this->__('affilinet'))
             ->_title($this->__('Signup'))
             ->renderLayout();
+    }
+
+    protected function _isAllowed() {
+        return Mage::getSingleton('admin/session')->isAllowed('admin/affilinet/cms');
     }
 
 }

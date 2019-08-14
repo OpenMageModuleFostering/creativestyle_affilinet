@@ -16,27 +16,29 @@
                 <introduction translate="title" module="affilinet">
                     <title>Introduction</title>
                     <sort_order>10</sort_order>
-                    <action>admin_affilinet/adminhtml_cms/introduction</action>
+                    <action>adminhtml/affilinet_cms/introduction</action>
+                    <resource>affilinet/cms</resource>
                 </introduction>
                 <signup translate="title" module="affilinet">
                     <title>Registration</title>
                     <sort_order>20</sort_order>
-                    <action>admin_affilinet/adminhtml_cms/signup</action>
+                    <action>adminhtml/affilinet_cms/signup</action>
+                    <resource>affilinet/cms</resource>
                 </signup>
                 <datafeed translate="title" module="affilinet">
                     <title>Product Data Feed</title>
                     <sort_order>30</sort_order>
-                    <action>admin_affilinet/adminhtml_datafeed/index</action>
+                    <action>adminhtml/affilinet_datafeed</action>
                 </datafeed>
                 <order translate="title" module="affilinet">
                     <title>Orders</title>
                     <sort_order>40</sort_order>
-                    <action>admin_affilinet/adminhtml_report_order</action>
+                    <action>adminhtml/affilinet_report_order</action>
                 </order>
                 <statistics translate="title" module="affilinet">
                     <title>Statistics</title>
                     <sort_order>50</sort_order>
-                    <action>admin_affilinet/adminhtml_report_statistics</action>
+                    <action>adminhtml/affilinet_report_statistics</action>
                 </statistics>
                 <settings translate="title" module="affilinet">
                     <title>Settings</title>
@@ -57,12 +59,9 @@
                     <affilinet>
                         <title>affilinet</title>
                         <children>
-                            <introduction translate="title" module="affilinet">
-                                <title>Introduction</title>
-                            </introduction>
-                            <signup translate="title" module="affilinet">
-                                <title>Registration</title>
-                            </signup>
+                            <cms translate="title" module="affilinet">
+                                <title>Introduction and registration</title>
+                            </cms>
                             <datafeed translate="title" module="affilinet">
                                 <title>Product Data Feed</title>
                             </datafeed>

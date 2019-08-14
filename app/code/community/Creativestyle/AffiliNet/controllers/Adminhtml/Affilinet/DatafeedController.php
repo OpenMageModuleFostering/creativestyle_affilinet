@@ -7,7 +7,7 @@
  * @author     Grzegorz Bogusz / creativestyle GmbH <support@creativestyle.de>
  */
 
-class Creativestyle_AffiliNet_Adminhtml_DatafeedController extends Mage_Adminhtml_Controller_Action
+class Creativestyle_AffiliNet_Adminhtml_Affilinet_DatafeedController extends Mage_Adminhtml_Controller_Action
 {
 
     protected function _getLogoUploadDir($absolutePath = true) {
@@ -324,4 +324,9 @@ class Creativestyle_AffiliNet_Adminhtml_DatafeedController extends Mage_Adminhtm
             return;
         }
     }
+
+    protected function _isAllowed() {
+        return Mage::getSingleton('admin/session')->isAllowed('admin/affilinet/datafeed');
+    }
+
 }

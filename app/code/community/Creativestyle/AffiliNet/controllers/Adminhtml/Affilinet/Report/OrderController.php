@@ -6,7 +6,7 @@
  * @copyright  Copyright (c) 2014 creativestyle GmbH
  * @author     Marek Zabrowarny / creativestyle GmbH <support@creativestyle.de>
  */
-class Creativestyle_AffiliNet_Adminhtml_Report_OrderController extends Creativestyle_AffiliNet_Controller_Adminhtml_Report_Abstract {
+class Creativestyle_AffiliNet_Adminhtml_Affilinet_Report_OrderController extends Creativestyle_AffiliNet_Controller_Adminhtml_Report_Abstract {
 
     protected function _initLayout() {
         parent::_initLayout();
@@ -180,6 +180,10 @@ class Creativestyle_AffiliNet_Adminhtml_Report_OrderController extends Creatives
             $result = $this->_updateTransactions($transactions, 'standard', $store);
         }
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+    }
+
+    protected function _isAllowed() {
+        return Mage::getSingleton('admin/session')->isAllowed('admin/affilinet/order');
     }
 
 }

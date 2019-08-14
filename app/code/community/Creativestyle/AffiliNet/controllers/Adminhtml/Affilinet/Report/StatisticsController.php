@@ -6,7 +6,7 @@
  * @copyright  Copyright (c) 2014 creativestyle GmbH
  * @author     Marek Zabrowarny / creativestyle GmbH <support@creativestyle.de>
  */
-class Creativestyle_AffiliNet_Adminhtml_Report_StatisticsController extends Creativestyle_AffiliNet_Controller_Adminhtml_Report_Abstract {
+class Creativestyle_AffiliNet_Adminhtml_Affilinet_Report_StatisticsController extends Creativestyle_AffiliNet_Controller_Adminhtml_Report_Abstract {
 
     protected function _initLayout() {
         parent::_initLayout();
@@ -24,6 +24,10 @@ class Creativestyle_AffiliNet_Adminhtml_Report_StatisticsController extends Crea
         ));
 
         return $this;
+    }
+
+    protected function _isAllowed() {
+        return Mage::getSingleton('admin/session')->isAllowed('admin/affilinet/statistics');
     }
 
 }

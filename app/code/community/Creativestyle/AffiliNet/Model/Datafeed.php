@@ -84,6 +84,7 @@ class Creativestyle_AffiliNet_Model_Datafeed extends Mage_Core_Model_Abstract
             if($preview){
                 $this->previewData = null;
                 $collection = clone $products;
+                $collection->getSelect()->group('e.entity_id');
                 //$collection->setPageSize(20);
                 //$collection->setCurPage(1);
                 //$collection->load();

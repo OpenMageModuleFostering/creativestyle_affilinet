@@ -12,21 +12,21 @@
         <reference name="head">
             <action method="addCss"><stylesheet>creativestyle/css/affilinet.css</stylesheet></action>
         </reference>
+        <reference name="before_body_end">
+            <block type="core/template" template="creativestyle/affilinet/init.phtml" />
+        </reference>
     </default>
-    <reference name="before_body_end">
-        <block type="core/template" template="creativestyle/affilinet/init.phtml" />
-    </reference>
-    <admin_affilinet_adminhtml_cms_introduction>
+    <adminhtml_affilinet_cms_introduction>
         <reference name="content">
             <block type="affilinet/adminhtml_cms" name="affilinet_introduction" template="creativestyle/affilinet/introduction.phtml"/>
         </reference>
-    </admin_affilinet_adminhtml_cms_introduction>
-    <admin_affilinet_adminhtml_cms_signup>
+    </adminhtml_affilinet_cms_introduction>
+    <adminhtml_affilinet_cms_signup>
         <reference name="content">
             <block type="affilinet/adminhtml_cms" name="affilinet_signup" template="creativestyle/affilinet/signup.phtml"/>
         </reference>
-    </admin_affilinet_adminhtml_cms_signup>
-    <admin_affilinet_adminhtml_datafeed_edit>
+    </adminhtml_affilinet_cms_signup>
+    <adminhtml_affilinet_datafeed_edit>
         <reference name="content">
             <block type="affilinet/adminhtml_datafeed_preview" name="affilinet.datafeed.preview" template="creativestyle/affilinet/datafeed/preview.phtml">
             </block>
@@ -40,8 +40,8 @@
                 <name>lib/prototype/windows/themes/magento.css</name>
             </action>
         </reference>
-    </admin_affilinet_adminhtml_datafeed_edit>
-    <admin_affilinet_adminhtml_report_order_index>
+    </adminhtml_affilinet_datafeed_edit>
+    <adminhtml_affilinet_report_order_index>
         <reference name="content">
             <block type="affilinet/adminhtml_report_order" template="creativestyle/affilinet/order/grid/container.phtml" name="affilinet.order.grid.container">
                 <block type="adminhtml/store_switcher" name="store_switcher" as="store_switcher">
@@ -52,8 +52,8 @@
                 <block type="affilinet/adminhtml_report_order_filter_form" name="affilinet.order.filter.form"/>
             </block>
         </reference>
-    </admin_affilinet_adminhtml_report_order_index>
-    <admin_affilinet_adminhtml_report_statistics_index>
+    </adminhtml_affilinet_report_order_index>
+    <adminhtml_affilinet_report_statistics_index>
         <reference name="head">
             <action method="addJs"><script>creativestyle/adminhtml/affilinet.js</script></action>
         </reference>
@@ -67,7 +67,7 @@
                 <block type="affilinet/adminhtml_report_statistics_filter_form" name="affilinet.statistics.filter.form"/>
             </block>
         </reference>
-    </admin_affilinet_adminhtml_report_statistics_index>
+    </adminhtml_affilinet_report_statistics_index>
     <admin_affilinet_failed_auth>
         <reference name="messages">
             <action method="addNotice" translate="message">
@@ -75,13 +75,13 @@
             </action>
         </reference>
     </admin_affilinet_failed_auth>
-    <admin_affilinet_adminhtml_report_order_auth>
+    <adminhtml_affilinet_report_order_auth>
         <update handle="admin_affilinet_failed_auth"/>
-    </admin_affilinet_adminhtml_report_order_auth>
-    <admin_affilinet_adminhtml_report_statistics_auth>
+    </adminhtml_affilinet_report_order_auth>
+    <adminhtml_affilinet_report_statistics_auth>
         <update handle="admin_affilinet_failed_auth"/>
-    </admin_affilinet_adminhtml_report_statistics_auth>
-    <admin_affilinet_adminhtml_report_order_getbasketinfo>
+    </adminhtml_affilinet_report_statistics_auth>
+    <adminhtml_affilinet_report_order_getbasketinfo>
         <block type="affilinet/adminhtml_report_order_grid_basketInfo" name="root" output="toHtml"/>
-    </admin_affilinet_adminhtml_report_order_getbasketinfo>
+    </adminhtml_affilinet_report_order_getbasketinfo>
 </layout>
