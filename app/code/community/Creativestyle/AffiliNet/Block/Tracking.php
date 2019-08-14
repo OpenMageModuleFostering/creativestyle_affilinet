@@ -27,7 +27,7 @@ class Creativestyle_AffiliNet_Block_Tracking extends Creativestyle_AffiliNet_Blo
                 $itemData[] = 'ProductName=' . rawurlencode($item->getName());
                 $itemData[] = 'Category=' . rawurlencode($helper->getProductCategory($product));
                 $itemData[] = 'Quantity=' . round($item->getQtyOrdered());
-                $itemData[] = 'SinglePrice=' . rawurlencode($taxHelper->getPrice($product, $item->getBaseRowTotalInclTax() / $item->getQtyOrdered(), false, null, null, null, null, true));
+                $itemData[] = 'SinglePrice=' . rawurlencode($taxHelper->getPrice($product, ($item->getBaseRowTotal() + $item->getBaseTaxAmount() + $item->getBaseHiddenTaxAmount() + $item->getBaseWeeeTaxAppliedRowAmount() - $item->getBaseDiscountAmount()) / $item->getQtyOrdered(), false, null, null, null, null, true));
                 if ($product->getData($manufacturerAttribute)) {
                     $manufacturerAttributeModel = $product->getResource()->getAttribute($manufacturerAttribute);
                     if (is_callable(array($manufacturerAttributeModel, 'getFrontend'))) {

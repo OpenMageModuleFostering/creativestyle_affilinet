@@ -71,7 +71,7 @@ abstract class Creativestyle_AffiliNet_Block_Abstract extends Mage_Core_Block_Te
 
     public function getOrderNetTotal() {
         if ($this->_getOrder()) {
-            return rawurlencode($this->_formatAmount($this->_getOrder()->getBaseSubtotal()));
+            return rawurlencode($this->_formatAmount($this->_getOrder()->getBaseGrandTotal() - $this->_getOrder()->getBaseTaxAmount() - $this->_getOrder()->getBaseShippingAmount()));
         }
         return '';
     }

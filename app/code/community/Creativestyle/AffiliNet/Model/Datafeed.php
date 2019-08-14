@@ -102,6 +102,7 @@ class Creativestyle_AffiliNet_Model_Datafeed extends Mage_Core_Model_Abstract
 
                 while ($break !== true) {
                     $collection = clone $products;
+                    $collection->getSelect()->group('e.entity_id');
                     //$collection->setPageSize($config['coll_size']);
                     if (is_null($lastPage)) {
                         $lastPage = ceil($products->getSize() / $config['coll_size']); //->getLastPageNumber();
@@ -135,10 +136,11 @@ class Creativestyle_AffiliNet_Model_Datafeed extends Mage_Core_Model_Abstract
 
         $checkOneVariation = $data['checkOneVariation'];
         if($checkOneVariation){
+            $table = Mage::getSingleton('core/resource')->getTableName('catalog/product_super_link');
             $query = '
             SELECT
                 parent_id
-            FROM catalog_product_super_link
+            FROM ' . $table . '
             WHERE product_id IN(' . $product->getEntityId() . ')';
             $checkParent = $connection->fetchAll($query);
 
@@ -148,14 +150,15 @@ class Creativestyle_AffiliNet_Model_Datafeed extends Mage_Core_Model_Abstract
         }
 
         if(!$checkOneVariation){
+            $table = Mage::getSingleton('core/resource')->getTableName('catalog/category_product');
             $query = '
             SELECT
                 category_id
-            FROM catalog_category_product
+            FROM ' . $table . '
             WHERE product_id = ' . $product->getEntityId();
 
             $categories = Mage::helper('affilinet')->getCategories($connection->fetchAll($query), $data['store_id']);
-
+            $helper = Mage::helper('core');
             $rows = array();
             foreach($this->mapper AS $m){
                 if($m[0]['fieldname'] == 'category_ids'){
@@ -208,11 +211,16 @@ class Creativestyle_AffiliNet_Model_Datafeed extends Mage_Core_Model_Abstract
                 if($field){
                     $field = $this->_sanitize($field);
                     if($m[0]['preffix'] == '' && $m[0]['suffix'] == ''){
-                        if(is_numeric($field)){
-                            $rows[] = (int)$field;
+                        if(strpos($m[0]['fieldname'], 'price') !== false){
+                            $rows[] = $helper->currency($field, false, false);
                         }else{
-                            $rows[] = $m[0]['preffix'] . $field . $m[0]['suffix'];
+                            if(is_numeric($field)){
+                                $rows[] = (int)$field;
+                            }else{
+                                $rows[] = $m[0]['preffix'] . $field . $m[0]['suffix'];
+                            }
                         }
+
                     }else{
                         $rows[] = $m[0]['preffix'] . $field . $m[0]['suffix'];
                     }
@@ -274,6 +282,7 @@ class Creativestyle_AffiliNet_Model_Datafeed extends Mage_Core_Model_Abstract
         $connection = Mage::getSingleton('core/resource')->getConnection('core_read');
 
         //mapper
+        $table = Mage::getSingleton('core/resource')->getTableName('affilinet/mapper');
         $sql = "SELECT
                 m.fieldname AS id,
                 m.title AS title,
@@ -282,7 +291,7 @@ class Creativestyle_AffiliNet_Model_Datafeed extends Mage_Core_Model_Abstract
                 m.suffix AS suffix,
                 m.concatenation AS concatenation
             FROM
-                creativestyle_affilinet_datafeed_mapper AS m
+                " . $table . " AS m
             WHERE
                 m.datafeed_id = :datafeed_id";
         $query = $connection->prepare($sql);
@@ -291,11 +300,12 @@ class Creativestyle_AffiliNet_Model_Datafeed extends Mage_Core_Model_Abstract
         $mapper = $query->fetchAll(PDO::FETCH_GROUP);
 
         //filter
+        $table = Mage::getSingleton('core/resource')->getTableName('affilinet/filter');
         $sql = "SELECT
                 f.fieldname AS fieldname,
                 f.filter AS filter
             FROM
-                creativestyle_affilinet_datafeed_filter AS f
+                " . $table . " AS f
             WHERE
                 f.datafeed_id = :datafeed_id";
         $query = $connection->prepare($sql);
@@ -446,7 +456,11 @@ class Creativestyle_AffiliNet_Model_Datafeed extends Mage_Core_Model_Abstract
     }
 
     protected function _afterLoad() {
-        $cronStart = str_replace(':', ',', substr($this->getData('cron_start'), -8));
+        $_ = $this->getData('cron_start');
+        if(strpos($_, ':') === false && strpos($_, ',') === false){
+            $_ = '00:00:00';
+        }
+        $cronStart = str_replace(':', ',', substr($_, -8));
         $this->setData('cron_start', $cronStart);
         return parent::_afterLoad();
     }

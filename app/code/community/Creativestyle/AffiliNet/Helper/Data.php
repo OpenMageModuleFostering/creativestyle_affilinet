@@ -88,12 +88,13 @@ class Creativestyle_AffiliNet_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function prepareCollection($datafeed, $mapper, $filters)
     {
+        $table = Mage::getSingleton('core/resource')->getTableName('cataloginventory/stock_item');
         $collection = Mage::getSingleton('catalog/product')
             ->getCollection()
             ->addAttributeToSelect('*')
             ->addAttributeToSelect('image')
             ->addUrlRewrite()
-            ->joinTable('cataloginventory_stock_item', 'product_id=entity_id', array(
+            ->joinTable($table, 'product_id=entity_id', array(
                 'qty' => 'qty',
                 'min_qty' => 'min_qty',
                 'use_config_min_qty' => 'use_config_min_qty',
@@ -213,10 +214,11 @@ class Creativestyle_AffiliNet_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function getProductCollection($id, $preview, $datafeed, $mapper = null, $filters = null)
     {
+        $table = Mage::getSingleton('core/resource')->getTableName('cataloginventory/stock_item');
         $products = Mage::getSingleton('catalog/product')
             ->getCollection()
             //->addAttributeToSelect('*')
-            ->joinTable('cataloginventory_stock_item', 'product_id=entity_id', array(
+            ->joinTable($table, 'product_id=entity_id', array(
                 'qty' => 'qty',
                 'min_qty' => 'min_qty',
                 'use_config_min_qty' => 'use_config_min_qty',
