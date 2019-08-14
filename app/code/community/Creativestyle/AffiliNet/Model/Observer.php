@@ -39,7 +39,12 @@ class Creativestyle_AffiliNet_Model_Observer {
             $break = false;
             foreach($feeds AS $feed){
                 $lastPage = $feed->getLastPage();
-                if($lastPage || $time < $feed->getNextGenerate()){
+                $nextGenerate = strtotime($feed->getNextGenerate());
+                if(!$nextGenerate){
+                    $nextGenerate = strtotime($feed->getCronStart());
+                }
+
+                if(!$lastPage && $time > $nextGenerate){
                     if(!$break){
                         $feed->setCronLock(1);
                         $feed->setCronStart($feed->getCronStart());

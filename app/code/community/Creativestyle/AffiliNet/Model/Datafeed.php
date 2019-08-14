@@ -96,8 +96,8 @@ class Creativestyle_AffiliNet_Model_Datafeed extends Mage_Core_Model_Abstract
                 return array_merge($columnTitle, $this->previewData);
             }else{
                 $config = Mage::getStoreConfig('affilinet/datafeed');
-                $page = $cron ? (int)$datafeed->getLastPage() : 1;
-                $pages = $cron ? ((int)$datafeed->getLastPage() + $config['pages'] - 1) : $config['pages'];
+                $page = $cron ? $datafeed->getLastPage() : 1;
+                $pages = $cron ? ($datafeed->getLastPage() + $config['pages'] - 1) : $config['pages'];
                 $lastPage = null;
                 $break = false;
 
@@ -298,7 +298,14 @@ class Creativestyle_AffiliNet_Model_Datafeed extends Mage_Core_Model_Abstract
         $query = $connection->prepare($sql);
         $query->bindParam(':datafeed_id', $id);
         $query->execute();
-        $mapper = $query->fetchAll(PDO::FETCH_GROUP);
+        $mapperItems = $query->fetchAll(PDO::FETCH_GROUP);
+
+        //fix the issue with fieldname = none
+        $mapper = array();
+        foreach($mapperItems AS $m){
+            $key = ($m[0]['fieldname'] == 'none') ? strtolower($this->_sanitize($m[0]['title'])) : $m[0]['fieldname'];
+            $mapper[$key] = $m;
+        }
 
         //filter
         $table = Mage::getSingleton('core/resource')->getTableName('affilinet/filter');
@@ -349,20 +356,33 @@ class Creativestyle_AffiliNet_Model_Datafeed extends Mage_Core_Model_Abstract
         $time = Mage::getModel('core/date')->timestamp(time());
         $feed = Mage::getModel('affilinet/datafeed')->load($id);
 
-        $_cronStart = explode(',', $feed->getCronStart());
-        if (count($_cronStart) == 3) {
-            $cronStart = mktime($_cronStart[0], $_cronStart[1], $_cronStart[2]);
+        $cronStart = $feed->getCronStart();
+        if($cronStart){
+            if(strpos($cronStart, ' ') !== false){
+                $cronTime = strtotime($cronStart);
+                $cronRepeat = ($feed->getCronRepeat()) ? $feed->getCronRepeat() : 3;
 
-            $diff = $time - $cronStart;
-            if($diff > 0 && $feed->getCronRepeat()){
-                $d = ceil(($diff / ($feed->getCronRepeat() * 3600)));
-                if($d){
-                    $feed->setNextGenerate($cronStart + $d * ($feed->getCronRepeat() * 3600));
-                }
+                $newTime = $cronTime + ($cronRepeat * 3600);
+                $feed->setNextGenerate($newTime);
+
+                $feed->save();
             }else{
-                $feed->setNextGenerate($cronStart);
+                $_cronStart = explode(',', $feed->getCronStart());
+                if (count($_cronStart) == 3) {
+                    $cronStart = mktime($_cronStart[0], $_cronStart[1], $_cronStart[2]);
+
+                    $diff = $time - $cronStart;
+                    if($diff > 0 && $feed->getCronRepeat()){
+                        $d = ceil(($diff / ($feed->getCronRepeat() * 3600)));
+                        if($d){
+                            $feed->setNextGenerate($cronStart + $d * ($feed->getCronRepeat() * 3600));
+                        }
+                    }else{
+                        $feed->setNextGenerate($cronStart);
+                    }
+                    $feed->save();
+                }
             }
-            $feed->save();
         }
     }
 

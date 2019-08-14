@@ -10,6 +10,7 @@ class Creativestyle_AffiliNet_Block_Adminhtml_Datafeed_Edit extends Mage_Adminht
         $this->_controller = 'adminhtml_datafeed';
 
         $disabled = '';
+        $id = 0;
 
         if ($this->getRequest()->getParam($this->_objectId)) {
             $id = $this->getRequest()->getParam($this->_objectId);
@@ -64,29 +65,30 @@ class Creativestyle_AffiliNet_Block_Adminhtml_Datafeed_Edit extends Mage_Adminht
         $this->removeButton('reset');
         $this->removeButton('save');
 
-        if($disabled){
-            $onclickSave = 'deleteConfirm(\''. Mage::helper('adminhtml')->__('If you save it now, file generating will be stopped')
-                .'\', editForm.submit())';
-        }else{
-            $onclickSave = 'editForm.submit();';
+        if ($id) {
+            $this->removeButton('delete');
+
+            $this->_addButton('delete', array(
+                'label'     => Mage::helper('adminhtml')->__('Delete'),
+                'class'     => 'delete',
+                'onclick'   => 'deleteConfirm(\''. Mage::helper('adminhtml')->__('Are you sure you want to do this?')
+                    .'\', \'' . $this->getDeleteUrl() . '\')',
+                'disabled' => $disabled,
+            ));
         }
 
         $this->_addButton('save', array(
             'label'     => Mage::helper('adminhtml')->__('Save'),
-            'onclick' => $onclickSave,
+            'onclick' => 'editForm.submit();',
             'class'     => 'save',
+            'disabled' => $disabled,
         ), 1);
 
-        if($disabled){
-            $onclickSaveCE = 'deleteConfirm(\''. Mage::helper('adminhtml')->__('If you save it now, file generating will be stopped')
-                .'\', \'' . $this->_getSaveAndContinueUrl() . '\')';
-        }else{
-            $onclickSaveCE = 'saveAndContinueEdit(\'' . $this->_getSaveAndContinueUrl() . '\')';
-        }
         $this->_addButton('save_and_continue', array(
             'label' => Mage::helper('affilinet')->__('Save and Continue Edit'),
-            'onclick' => $onclickSaveCE,
-            'class' => 'save'
+            'onclick' => 'saveAndContinueEdit(\'' . $this->_getSaveAndContinueUrl() . '\')',
+            'class' => 'save',
+            'disabled' => $disabled,
         ), 10);
         $this->_formScripts[] = " function saveAndContinueEdit(){ editForm.submit($('edit_form').action + 'back/edit/') } ";
     }
