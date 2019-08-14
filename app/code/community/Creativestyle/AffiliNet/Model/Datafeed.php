@@ -12,7 +12,7 @@ class Creativestyle_AffiliNet_Model_Datafeed extends Mage_Core_Model_Abstract
 
     protected function _sanitize($data) {
         $data = strip_tags($data);
-        $data = preg_replace('/[^[:print:]]/', '', $data);
+        $data = str_replace(array("\t", "\n", "\r"), '', $data);
         return $data;
     }
 
@@ -180,7 +180,7 @@ class Creativestyle_AffiliNet_Model_Datafeed extends Mage_Core_Model_Abstract
                     $type = 'text';
                     $attributeInstance = $product->getResource()->getAttribute($m[0]['fieldname']);
                     if($attributeInstance){
-                        $product->getResource()->getAttribute($m[0]['fieldname'])->getFrontendInput();
+                        $type = $product->getResource()->getAttribute($m[0]['fieldname'])->getFrontendInput();
                     }
 
                     if($type == 'select'){
