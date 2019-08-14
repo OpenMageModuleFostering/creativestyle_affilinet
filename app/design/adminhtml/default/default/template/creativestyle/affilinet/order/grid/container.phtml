@@ -58,34 +58,38 @@
     }
 
     function saveOrders() {
-        var parameters = {
-            store: <?php echo ($this->getStoreId() ? $this->getStoreId() : 'null'); ?>
-        };
-        $$('#affilinet-orders input').each(function(element) {
-            if (element.value && element.value.length && !element.disabled) {
-                if (element.type && element.type.toLowerCase() == 'radio') {
-                    var checked = $(element.form).getInputs('radio', element.name).detect(
-                        function(radiobutton) {return radiobutton.checked;}
-                    );
-                    parameters[element.name] = checked ? $F(checked) : null;
-                } else {
-                    parameters[element.name] = $F(element);
-                }
-            }
-        });
-        new Ajax.Request('<?php echo $this->getSaveBasketsUrl(); ?>', {
-            parameters: parameters,
-            onSuccess: function(transport) {
-                response = eval('(' + transport.responseText + ')');
-                if (response.error) {
-                    insertMessage(response.error_messages || 'Unknown error', false);
-                } else {
-                    if (response.success_messages) {
-                        insertMessage(response.success_messages, true);
+        $$('#affilinet-orders .validation-advice').invoke('remove');
+        var validator  = new Validation('affilinet-orders');
+        if (validator.validate()) {
+            var parameters = {
+                store: <?php echo ($this->getStoreId() ? $this->getStoreId() : 'null'); ?>
+            };
+            $$('#affilinet-orders input').each(function(element) {
+                if (element.value && element.value.length && !element.disabled) {
+                    if (element.type && element.type.toLowerCase() == 'radio') {
+                        var checked = $(element.form).getInputs('radio', element.name).detect(
+                            function(radiobutton) {return radiobutton.checked;}
+                        );
+                        parameters[element.name] = checked ? $F(checked) : null;
+                    } else {
+                        parameters[element.name] = $F(element);
                     }
                 }
-            }
-        });
+            });
+            new Ajax.Request('<?php echo $this->getSaveBasketsUrl(); ?>', {
+                parameters: parameters,
+                onSuccess: function(transport) {
+                    response = eval('(' + transport.responseText + ')');
+                    if (response.error) {
+                        insertMessage(response.error_messages || 'Unknown error', false);
+                    } else {
+                        if (response.success_messages) {
+                            insertMessage(response.success_messages, true);
+                        }
+                    }
+                }
+            });
+        }
         return false;
     }
 
@@ -140,6 +144,23 @@
         return false;
     }
 
+    function toggleReasonRequired(event) {
+        var input = event.findElement('input');
+        if (input) {
+            var transactionId = input.identify().gsub(/standard_|_net_price_new/, '');
+            var currentPriceInput = $('standard_' + transactionId + '_net_price_current')
+            var reasonInput = $('standard_' + transactionId + '_cancellation_reason')
+            if (currentPriceInput && reasonInput) {
+                if ($F(input).trim() != $F(currentPriceInput).trim()) {
+                    reasonInput.addClassName('required-entry');
+                } else {
+                    reasonInput.removeClassName('required-entry');
+                }
+            }
+        }
+        return false;
+    }
+
     document.observe('dom:loaded', function() {
         var overflowed = $$('#affilinetOrderGrid .hor-scroll');
         if (overflowed) {
@@ -152,6 +173,8 @@
                 Event.observe(link, 'click', toggleBasketInfo.bindAsEventListener(this, basketId));
             }
         });
+
+        $$('.new-net-price-input').invoke('observe', 'change', toggleReasonRequired.bindAsEventListener(this));
     });
 
 //]]></script>
