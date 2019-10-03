@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/Creativestyle_AffiliNet",
+    "name": "OpenMageModuleFostering\/Creativestyle_AffiliNet",
     "type": "magento-module",
     "license": "Commercial",
     "homepage": "",
     "description": "This extension provides integration of your Magento shop with affilinet program.",
     "authors": [
-    {
-        "name": "affilinet GmbH",
-        "email": "magento@affili.net"
-    }
-],
+        {
+            "name": "affilinet GmbH",
+            "email": "magento@affili.net"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
