@@ -1,3 +1,5 @@
+
+
 ## Original Package Description
 
 This extension provides integration of your Magento shop with affilinet program.
